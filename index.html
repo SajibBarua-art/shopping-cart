@@ -16,7 +16,7 @@
       <div class="container">
          <div class="cart">
             <div class="col-md-12 col-lg-10 mx-auto">
-               <div class="cart-item">
+               <div id="product1" class="cart-item">
                   <div class="row">
                      <div class="col-md-7 center-item">
                         <img src="images/product-1.png" alt="">
@@ -30,12 +30,12 @@
                            <button id="plusButton" class="plus btn btn-default"><i class="fas fa-plus"></i></button>
                         </div>
                         <h5>$ <span id="phonePrice">1219</span></h5>
-                        <img src="images/remove.png" alt="" class="remove-item">
+                        <button id="removeProduct1" class="btn btn-default"><img src="images/remove.png" alt="" class="remove-item"></button>
                      </div>
                   </div>
                </div>
 
-               <div class="cart-item">
+               <div id='product2' class="cart-item">
                   <div class="row">
                      <div class="col-md-7 center-item mx-auto">
                         <img src="images/product-2.png" alt="">
@@ -49,7 +49,7 @@
 
                         </div>
                         <h5>$ <span id="casePrice">59</span> </h5>
-                        <img src="images/remove.png" alt="" class="remove-item">
+                        <button id="removeProduct2" class="btn btn-default"><img src="images/remove.png" alt="" class="remove-item"></button>
                      </div>
                   </div>
                </div>
@@ -125,11 +125,19 @@
             document.getElementById('total').innerText = total;
          })
       }
-
       updateTotalItem('minusButton', 'value1', 'minus', 'phonePrice');
       updateTotalItem('plusButton', 'value1', 'plus', 'phonePrice');
       updateTotalItem('minusButton2', 'value2', 'minus', 'casePrice');
       updateTotalItem('plusButton2', 'value2', 'plus', 'casePrice');
+
+      function removeProduct(removeButton, productBodyId) {
+         document.getElementById(removeButton)
+         .addEventListener('click', function(event) {
+            document.getElementById(productBodyId).style.display = 'none';
+         })
+      }
+      removeProduct('removeProduct1', 'product1');
+      removeProduct('removeProduct2', 'product2');
    </script>
 </body>
 

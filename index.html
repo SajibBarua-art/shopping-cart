@@ -25,12 +25,12 @@
 
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button id="minusButton" class="minus btn btn-default"><i class="fas fa-minus"></i></button>
+                           <button id="minusButton1" class="minus btn btn-default"><i class="fas fa-minus"></i></button>
                            <input id="value1" type="text" class="form-control text-center" value="1">
-                           <button id="plusButton" class="plus btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button id="plusButton1" class="plus btn btn-default"><i class="fas fa-plus"></i></button>
                         </div>
                         <h5>$ <span id="phonePrice">1219</span></h5>
-                        <button id="removeProduct1" class="btn btn-default"><img src="images/remove.png" alt="" class="remove-item"></button>
+                        <button id="product1RemoveButton" class="btn btn-default"><img src="images/remove.png" alt="" class="remove-item"></button>
                      </div>
                   </div>
                </div>
@@ -46,10 +46,9 @@
                            <button id="minusButton2" class="minus btn btn-default"><i class="fas fa-minus"></i></button>
                            <input id="value2" type="text" class="form-control text-center" value="1">
                            <button id="plusButton2" class="plus btn btn-default"><i class="fas fa-plus"></i></button>
-
                         </div>
                         <h5>$ <span id="casePrice">59</span> </h5>
-                        <button id="removeProduct2" class="btn btn-default"><img src="images/remove.png" alt="" class="remove-item"></button>
+                        <button id="product2RemoveButton" class="btn btn-default"><img src="images/remove.png" alt="" class="remove-item"></button>
                      </div>
                   </div>
                </div>
@@ -97,6 +96,21 @@
          if(id == 'phonePrice') return 1219;
          else return 59;
       }
+      function moneyCalculation() {
+         // To update the value of subtotal
+         const phonePriceTotal = getElementNumber('phonePrice','innerText');
+            const casePriceTotal = getElementNumber('casePrice','innerText');
+            const subtotal = phonePriceTotal+casePriceTotal;
+            document.getElementById('subtotal').innerText = subtotal;
+
+            // To update the value of tax
+            const tax = Math.round(subtotal*0.01);
+            document.getElementById('tax').innerText = tax;
+
+            // To update the value of total
+            const total = subtotal + tax;
+            document.getElementById('total').innerText = total;
+      }
       function updateTotalItem(buttonId, valueId, operation, productPriceId) {
          document.getElementById(buttonId)
          .addEventListener('click', function(event) {
@@ -110,34 +124,25 @@
             const priceOfAll = priceOfOne*updatedValue;
             document.getElementById(productPriceId).innerText = priceOfAll;
 
-            // To update the value of subtotal
-            const phonePriceTotal = getElementNumber('phonePrice','innerText');
-            const casePriceTotal = getElementNumber('casePrice','innerText');
-            const subtotal = phonePriceTotal+casePriceTotal;
-            document.getElementById('subtotal').innerText = subtotal;
-
-            // To update the value of tax
-            const tax = Math.round(subtotal*0.01);
-            document.getElementById('tax').innerText = tax;
-
-            // To update the value of total
-            const total = subtotal + tax;
-            document.getElementById('total').innerText = total;
+            moneyCalculation();
          })
       }
-      updateTotalItem('minusButton', 'value1', 'minus', 'phonePrice');
-      updateTotalItem('plusButton', 'value1', 'plus', 'phonePrice');
+      updateTotalItem('minusButton1', 'value1', 'minus', 'phonePrice');
+      updateTotalItem('plusButton1', 'value1', 'plus', 'phonePrice');
       updateTotalItem('minusButton2', 'value2', 'minus', 'casePrice');
       updateTotalItem('plusButton2', 'value2', 'plus', 'casePrice');
 
-      function removeProduct(removeButton, productBodyId) {
-         document.getElementById(removeButton)
+      function removeProduct(button, productBodyId, price) {
+         document.getElementById(button)
          .addEventListener('click', function(event) {
             document.getElementById(productBodyId).style.display = 'none';
+            const removeProductPrice = parseFloat(document.getElementById(price).innerText);
+            document.getElementById(price).innerText = '0';
+            moneyCalculation();
          })
       }
-      removeProduct('removeProduct1', 'product1');
-      removeProduct('removeProduct2', 'product2');
+      removeProduct('product1RemoveButton', 'product1', 'phonePrice');
+      removeProduct('product2RemoveButton', 'product2', 'casePrice');
    </script>
 </body>
 

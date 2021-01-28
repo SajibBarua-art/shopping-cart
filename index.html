@@ -25,11 +25,11 @@
 
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input type="text" class="form-control text-center" value="1">
-                           <button class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button id="minusButton" class="minus btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="value1" type="text" class="form-control text-center" value="1">
+                           <button id="plusButton" class="plus btn btn-default"><i class="fas fa-plus"></i></button>
                         </div>
-                        <h5>$1219</h5>
+                        <h5>$ <span id="phonePrice">1219</span></h5>
                         <img src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
@@ -43,12 +43,12 @@
                      </div>
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input type="text" class="form-control text-center" value="1">
-                           <button class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button id="minusButton2" class="minus btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="value2" type="text" class="form-control text-center" value="1">
+                           <button id="plusButton2" class="plus btn btn-default"><i class="fas fa-plus"></i></button>
 
                         </div>
-                        <h5>$59</h5>
+                        <h5>$ <span id="casePrice">59</span> </h5>
                         <img src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
@@ -77,6 +77,42 @@
          </div>
       </div>
    </section>
+
+   <script>
+      function getElementNumber(id) {
+         return parseFloat(document.getElementById(id).value);
+      }
+      function incrementOrDecrementValue(valueNumber, operation) {
+         let updatedValue = valueNumber;
+         if(updatedValue > 0 && operation === 'minus') updatedValue--;
+         else if(operation === 'plus') updatedValue++;
+
+         return updatedValue;
+      }
+      function productPriceOfOne(id) {
+         if(id == 'phonePrice') return 1219;
+         else return 59;
+      }
+      function updateTotalItem(buttonId, valueId, operation, productPriceId) {
+         document.getElementById(buttonId)
+         .addEventListener('click', function(event) {
+            // To update the value of total product number
+            const valueNumber = getElementNumber(valueId);
+            const updatedValue = incrementOrDecrementValue(valueNumber, operation);
+            document.getElementById(valueId).value = updatedValue;
+
+            // To update the total value of a product price
+            const priceOfOne = productPriceOfOne(productPriceId);
+            const priceOfAll = priceOfOne*updatedValue;
+            document.getElementById(productPriceId).innerText = priceOfAll;
+         })
+      }
+
+      updateTotalItem('minusButton', 'value1', 'minus', 'phonePrice');
+      updateTotalItem('plusButton', 'value1', 'plus', 'phonePrice');
+      updateTotalItem('minusButton2', 'value2', 'minus', 'casePrice');
+      updateTotalItem('plusButton2', 'value2', 'plus', 'casePrice');
+   </script>
 </body>
 
 </html>
